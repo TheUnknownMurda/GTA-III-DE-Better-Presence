@@ -1,0 +1,4 @@
+client/.venv/
+client/presence.log
+tools/downloads/
+__pycache__/
