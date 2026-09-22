@@ -11,6 +11,10 @@
   "min_update_interval": 4,
   "_comment_lifecycle": "Le mod lance le client au démarrage du jeu ; avec exit_with_game, le client se ferme quand le jeu se ferme.",
   "exit_with_game": true,
+  "_comment_activity_name": "Nom affiché par Discord après « Joue à » (remplace le nom de l'application, sans ses restrictions de caractères ni de longueur). Vide = nom de l'application.",
+  "activity_name": "Grand Theft Auto III – The Definitive Edition",
+  "_comment_status_display": "Texte de statut dans la liste des membres et le profil : name = nom du jeu, details = ligne 1 (lieu), state = ligne 2 (activité).",
+  "status_display": "name",
   "_comment_images": "Clés d'images (onglet Rich Presence > Art Assets de ton appli Discord) OU URLs https directes. Laisse vide pour ne rien afficher.",
   "images": {
     "large": "logo",

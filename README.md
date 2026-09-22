@@ -88,6 +88,7 @@ start.bat            rem console mode, logs visible
 `client/config.json`:
 
 - `texts` — displayed texts (English by default, freely translatable). `location` (line 1, `{zone}, {island}`), `location_no_island` (when the HUD district is itself an island name, e.g. "Portland"), `location_island` (position known but no district), `zones` (English computed district → your language, used until the HUD has shown the name), `on_foot_weapon` (`{transport}{sep}{weapon}`), `mission_timer`, `stats` (tooltip of the large image: a list of templates, those with a missing value are dropped)…
+- `activity_name` — the name Discord shows after "Playing" (the activity's `name` field, which replaces the application's registered name: no 32-character limit, no forbidden characters). Empty = application name. `status_display` — the status text in the member list: `name` (game name), `details` (line 1, location) or `state` (line 2, activity).
 - `images` — asset keys; `money_format` (`{sign}${amount:,}` → `-$1,069`; use `{sign}{amount:,} $` for `1 069 $`); `mission_case` (`title` → "Don't Spank Ma Bitch Up", `sentence` → "Don't spank ma bitch up", `keep` → as displayed by the game, upper-case); `weapons` (icon → name overrides / translations); `hidden_weapons` (`["Fists"]` by default).
 - Polling interval, maximum age of `state.json` before falling back to the basic presence, `exit_with_game`.
 

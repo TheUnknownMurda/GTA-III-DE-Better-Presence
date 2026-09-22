@@ -69,6 +69,8 @@ class Config:
     hidden_weapons: list[str] = field(default_factory=list)
     money_format: str = "{sign}${amount:,}"
     mission_case: str = "keep"          # keep | title | sentence
+    activity_name: str = ""             # nom affiché après « Joue à » ; vide = nom de l'application Discord
+    status_display: str = "name"        # texte de statut (liste des membres) : name | details | state
 
     @staticmethod
     def load(path: Path = CONFIG_PATH) -> "Config":
@@ -88,6 +90,8 @@ class Config:
             hidden_weapons=[w.lower() for w in raw.get("hidden_weapons", [])],
             money_format=raw.get("money_format", "{sign}${amount:,}"),
             mission_case=str(raw.get("mission_case", "keep")).lower(),
+            activity_name=str(raw.get("activity_name") or "").strip(),
+            status_display=str(raw.get("status_display", "name")).lower(),
         )
 
 
@@ -279,6 +283,14 @@ def build_activity(cfg: Config, state: Optional[GameState], start_ts: int) -> di
     sep = t.get("separator", " · ")
 
     act: dict[str, Any] = {"start": start_ts}
+    # Nom affiché après « Joue à » : le champ `name` de l'activité remplace le nom de
+    # l'application (caractères et longueur non limités par Discord Developer Portal).
+    if cfg.activity_name:
+        act["name"] = cfg.activity_name
+    # Texte de statut dans la liste des membres : 0 nom, 1 state (ligne 2), 2 details (ligne 1).
+    display = {"name": 0, "state": 1, "details": 2}.get(cfg.status_display, 0)
+    if display:
+        act["status_display_type"] = display
     if img.get("large"):
         act["large_image"] = img["large"]
         act["large_text"] = img.get("large_text") or None
@@ -383,7 +395,7 @@ def truncate_fields(act: dict[str, Any]) -> dict[str, Any]:
     for k, v in act.items():
         if v is None:
             continue
-        if isinstance(v, str) and k in ("details", "state", "large_text", "small_text"):
+        if isinstance(v, str) and k in ("name", "details", "state", "large_text", "small_text"):
             v = v.strip()
             if len(v) < 2:
                 continue
